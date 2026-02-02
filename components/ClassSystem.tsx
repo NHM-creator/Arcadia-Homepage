@@ -4,7 +4,7 @@ import {
 } from 'recharts';
 import { CLASSES } from '../constants';
 import { RoleType, ClassData } from '../types';
-import { Shield, Swords, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Shield, Swords, Heart, ChevronLeft, ChevronRight, Crown } from 'lucide-react';
 
 interface ClassSystemProps {
   selectedRole: RoleType;
@@ -179,7 +179,7 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
         </div>
 
         {/* Main Content Area */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 glass-panel rounded-xl overflow-hidden min-h-[600px]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 glass-panel rounded-xl overflow-hidden min-h-[600px] mb-24">
           
           {/* Middle: Character Image Display (Mobile: Order 1) */}
           <div ref={detailRef} className="lg:col-span-5 lg:order-2 relative flex items-center justify-center p-8 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] group order-1">
@@ -294,6 +294,36 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
           </div>
 
         </div>
+
+        {/* Final CTA Section */}
+        <div className="flex flex-col items-center justify-center text-center animate-fade-in-up">
+           <p className="font-serif text-xl md:text-3xl text-gray-100 mb-8 tracking-wider drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
+              "우리에게 당신의 구원의 손길을..."
+           </p>
+           
+           {/* Tricolor Gradient Divider with Tapered Ends (Sharp look) */}
+           <div 
+             className="h-1 w-32 md:w-64 mx-auto mb-10 shadow-[0_0_10px_rgba(255,255,255,0.3)]"
+             style={{ 
+               background: 'linear-gradient(90deg, rgba(0,0,0,0) 0%, #2563eb 20%, #dc2626 50%, #eab308 80%, rgba(0,0,0,0) 100%)' 
+             }}
+           ></div>
+           
+           <a 
+             href="https://share.crack.wrtn.ai/nr6uqy"
+             target="_blank"
+             rel="noopener noreferrer"
+             className="group relative px-10 py-5 bg-gradient-to-r from-gray-900 to-black text-gold font-bold font-serif text-xl tracking-[0.2em] border border-gold/50 hover:border-gold hover:shadow-[0_0_30px_rgba(255,215,0,0.3)] transition-all duration-300 clip-path-polygon inline-block"
+           >
+             <span className="flex items-center gap-3 relative z-10">
+               <Crown className="w-6 h-6" />
+               운명을 선택하라
+             </span>
+             {/* Button Inner Glow */}
+             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gold/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+           </a>
+        </div>
+
       </div>
     </section>
   );

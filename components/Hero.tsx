@@ -1,8 +1,15 @@
 import React from 'react';
-import { Play, Download, ChevronDown } from 'lucide-react';
+import { Play, Download, ChevronDown, BookOpen, Layers } from 'lucide-react';
 import { HERO_VIDEO_PLACEHOLDER } from '../constants';
 
 const Hero: React.FC = () => {
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="hero" className="relative h-screen w-full overflow-hidden">
       {/* Background Image / Pseudo-Video */}
@@ -32,30 +39,26 @@ const Hero: React.FC = () => {
 
         {/* CTA Buttons */}
         <div className="flex flex-col md:flex-row gap-6">
-          <a 
-            href="https://share.crack.wrtn.ai/nr6uqy"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button 
+            onClick={() => scrollToSection('world')}
             className="group relative px-8 py-4 bg-gradient-to-r from-yellow-600 to-yellow-500 text-midnight font-bold font-serif text-lg tracking-widest clip-path-polygon hover:brightness-110 transition-all shadow-[0_0_20px_rgba(255,215,0,0.4)] flex items-center justify-center"
           >
             <span className="flex items-center gap-2">
-              <Play className="w-5 h-5 fill-current" />
-              GAME START
+              <BookOpen className="w-5 h-5 fill-current" />
+              컨텐츠 몰아보기
             </span>
             <div className="absolute inset-0 border-2 border-white/30 group-hover:border-white/60 transition-colors"></div>
-          </a>
+          </button>
           
-          <a 
-            href="https://crack.wrtn.ai/profile/8IRJgYQSxEY-KKKOOERNODJP"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button 
+            onClick={() => scrollToSection('class')}
             className="group relative px-8 py-4 bg-midnight/50 backdrop-blur-md text-gold font-bold font-serif text-lg tracking-widest border border-gold/30 hover:bg-midnight/70 hover:border-gold transition-all flex items-center justify-center"
           >
             <span className="flex items-center gap-2">
-              <Download className="w-5 h-5" />
-              ARCHIVES
+              <Layers className="w-5 h-5" />
+              클래스 몰아보기
             </span>
-          </a>
+          </button>
         </div>
       </div>
 
