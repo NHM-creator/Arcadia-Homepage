@@ -172,7 +172,7 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
             text: 'text-blue-400',
             border: 'border-blue-500',
             glow: 'bg-blue-600',
-            shadow: 'shadow-[inset_0_0_20px_rgba(59,130,246,0.3)]',
+            shadow: 'shadow-[inset_0_0_20px_rgba(59,130,246,0.5)]',
             radarFill: '#3b82f6',
             radarStroke: '#3b82f6',
             badgeBg: 'bg-blue-600',
@@ -184,7 +184,7 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
             text: 'text-red-400',
             border: 'border-red-600',
             glow: 'bg-red-600',
-            shadow: 'shadow-[inset_0_0_20px_rgba(220,38,38,0.3)]',
+            shadow: 'shadow-[inset_0_0_20px_rgba(220,38,38,0.5)]',
             radarFill: '#dc2626',
             radarStroke: '#dc2626',
             badgeBg: 'bg-red-600',
@@ -196,7 +196,7 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
             text: 'text-yellow-400',
             border: 'border-yellow-500',
             glow: 'bg-yellow-500',
-            shadow: 'shadow-[inset_0_0_20px_rgba(234,179,8,0.3)]',
+            shadow: 'shadow-[inset_0_0_20px_rgba(234,179,8,0.5)]',
             radarFill: '#FFD700',
             radarStroke: '#FFD700',
             badgeBg: 'bg-yellow-500',
@@ -212,7 +212,7 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
             text: 'text-emerald-400',
             border: 'border-emerald-500',
             glow: 'bg-emerald-600',
-            shadow: 'shadow-[inset_0_0_20px_rgba(16,185,129,0.3)]',
+            shadow: 'shadow-[inset_0_0_20px_rgba(16,185,129,0.5)]',
             radarFill: '#10b981',
             radarStroke: '#10b981',
             badgeBg: 'bg-emerald-600',
@@ -224,7 +224,7 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
             text: 'text-blue-400',
             border: 'border-blue-500',
             glow: 'bg-blue-600',
-            shadow: 'shadow-[inset_0_0_20px_rgba(59,130,246,0.3)]',
+            shadow: 'shadow-[inset_0_0_20px_rgba(59,130,246,0.5)]',
             radarFill: '#3b82f6',
             radarStroke: '#3b82f6',
             badgeBg: 'bg-blue-600',
@@ -236,7 +236,7 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
             text: 'text-violet-400',
             border: 'border-violet-600',
             glow: 'bg-violet-600',
-            shadow: 'shadow-[inset_0_0_20px_rgba(139,92,246,0.3)]',
+            shadow: 'shadow-[inset_0_0_20px_rgba(139,92,246,0.5)]',
             radarFill: '#8b5cf6',
             radarStroke: '#8b5cf6',
             badgeBg: 'bg-violet-600',
@@ -503,9 +503,9 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
              {renderSidebar('NATION')}
           </div>
 
-          {/* Center Content Area */}
+          {/* Center Content Area - Applied theme.shadow here */}
           <div className="flex-1 w-full max-w-7xl">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 glass-panel rounded-xl overflow-hidden min-h-[600px]">
+            <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 glass-panel rounded-xl overflow-hidden min-h-[600px] transition-all duration-500 ${theme.shadow}`}>
               
               {/* Middle: Character Image */}
               <div 
@@ -535,15 +535,27 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
                     <>
                       <button 
                         onClick={prevImage}
-                        className={`absolute left-2 top-1/2 -translate-y-1/2 p-3 rounded-full border-2 ${theme.border} ${theme.text} hover:bg-white hover:text-black transition-all backdrop-blur-md z-30 shadow-lg`}
+                        className={`
+                          absolute left-2 top-1/2 -translate-y-1/2 
+                          p-2 md:p-3 
+                          rounded-full border-2 ${theme.border} ${theme.text} 
+                          hover:bg-white hover:text-black 
+                          transition-all backdrop-blur-md z-30 shadow-lg
+                        `}
                       >
-                        <ChevronLeft size={24} strokeWidth={3} />
+                        <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" strokeWidth={3} />
                       </button>
                       <button 
                         onClick={nextImage}
-                        className={`absolute right-2 top-1/2 -translate-y-1/2 p-3 rounded-full border-2 ${theme.border} ${theme.text} hover:bg-white hover:text-black transition-all backdrop-blur-md z-30 shadow-lg`}
+                        className={`
+                          absolute right-2 top-1/2 -translate-y-1/2 
+                          p-2 md:p-3 
+                          rounded-full border-2 ${theme.border} ${theme.text} 
+                          hover:bg-white hover:text-black 
+                          transition-all backdrop-blur-md z-30 shadow-lg
+                        `}
                       >
-                        <ChevronRight size={24} strokeWidth={3} />
+                        <ChevronRight className="w-5 h-5 md:w-6 md:h-6" strokeWidth={3} />
                       </button>
                       
                       {/* Gender/Image Indicators - Enhanced for visibility */}

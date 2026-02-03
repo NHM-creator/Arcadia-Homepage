@@ -113,11 +113,22 @@ const WorldInfo: React.FC = () => {
                 onMouseLeave={() => setHoveredId(null)}
                 className={`group relative h-[500px] overflow-hidden rounded-sm border border-white/10 transition-all duration-500 hover:shadow-[0_0_30px_rgba(0,0,0,0.5)] bg-midnight/30 backdrop-blur-sm ${borderClass}`}
               >
-                {/* Background Image */}
-                <div 
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110"
-                  style={{ backgroundImage: `url(${feature.imageUrl})` }}
-                ></div>
+                {/* Background Images */}
+                <div className="absolute inset-0 bg-black">
+                   {/* Default Image */}
+                   <div 
+                      className={`absolute inset-0 bg-cover bg-center transition-all duration-1000 group-hover:scale-110 ${feature.hoverImageUrl && isHovered ? 'opacity-0' : 'opacity-100'}`}
+                      style={{ backgroundImage: `url(${feature.imageUrl})` }}
+                   ></div>
+                   
+                   {/* Hover Image (if exists) */}
+                   {feature.hoverImageUrl && (
+                      <div 
+                        className={`absolute inset-0 bg-cover bg-center transition-all duration-1000 group-hover:scale-110 ${isHovered ? 'opacity-100' : 'opacity-0'}`}
+                        style={{ backgroundImage: `url(${feature.hoverImageUrl})` }}
+                      ></div>
+                   )}
+                </div>
                 
                 {/* Dark Overlay - Fades out slightly on hover to reveal image more, but keeps text readable */}
                 <div className="absolute inset-0 bg-gradient-to-t from-midnight via-midnight/80 to-transparent opacity-90 transition-opacity duration-500 group-hover:opacity-60"></div>

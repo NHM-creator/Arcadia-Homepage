@@ -9,7 +9,8 @@ export const FEATURES: FeatureData[] = [
     subtitle: '아르카디아의 꽃이자, 도전의 끝\n"실수는 용납되지 않습니다. 증명하십시오."',
     description: '차원의 균열을 뚫고 세상을 멸망시키려는 혼돈의 군단이 침공합니다. 군단장들에 맞서 4인 수호자 혹은 8인의 수호자들로 구성된 공격대를 결성하십시오. 숨 막히는 패턴, 치명적인 즉사 기믹 파훼, 압도적인 연출. 생존과 승리는 오직 동료들을 향한 완벽한 신뢰에 달려있습니다.',
     icon: 'Sword',
-    imageUrl: 'https://i.postimg.cc/HkDtYCPG/yeoseongboseu.png'
+    imageUrl: 'https://i.postimg.cc/4xFJ4mC9/군단장_레이드_1.png',
+    hoverImageUrl: 'https://i.postimg.cc/NjPgG5hL/군단장_레이드_2.png'
   },
   {
     id: 'guild',
@@ -17,7 +18,8 @@ export const FEATURES: FeatureData[] = [
     subtitle: '전설이 시작되는 거점\n"혼자서는 영웅이지만, 함께라면 신화가 됩니다."',
     description: '플레이어들의 독립 조직인 \'길드\'를 창설하고, 길드원들만이 방문할 수 있는 독립된 섬을 하사받으십시오. 단순한 친목을 넘어, 상위 길드를 목표로 한다면 치열한 \'길드 대항전\'의 핵심 거점이 될 것입니다.',
     icon: 'Home',
-    imageUrl: 'https://i.postimg.cc/R0sT7JXx/saenghwal-yeongji.png'
+    imageUrl: 'https://i.postimg.cc/mg6bZtxr/길드영지_1.png',
+    hoverImageUrl: 'https://i.postimg.cc/W1f2phRh/길드영지_2.png'
   },
   {
     id: 'avatar',
@@ -64,7 +66,7 @@ export const CLASSES: ClassData[] = [
     nation: 'EAST',
     tagline: '피로 흩날리는 벚꽃',
     weapon: '일본도',
-    description: '눈에 보이지 않는 신속의 검사입니다. 차원을 베어내는 발도술로 적을 유린합니다. 생존력은 낮지만, 극한의 컨트롤로 적의 공격을 회피하며 쉴 새 없이 몰아칩니다.',
+    description: '눈에 보이지 않는 신속의 검사입니다. 차원을 베어내는 발도술로 적의 공격을 회피하며 쉴 새 없이 몰아칩니다.',
     stats: { attack: 100, defense: 10, support: 10, mobility: 100, difficulty: 95 },
     imageUrls: ['https://i.postimg.cc/mDBLFTKt/환영검사_2.png']
   },

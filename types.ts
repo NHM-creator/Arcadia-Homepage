@@ -29,4 +29,5 @@ export interface FeatureData {
   description: string;
   icon: string;
   imageUrl: string;
+  hoverImageUrl?: string;
 }
