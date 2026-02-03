@@ -1,0 +1,118 @@
+import React from 'react';
+import PageHeader from '../components/PageHeader';
+import { Mountain, Cog, Skull } from 'lucide-react';
+
+const StoryPage: React.FC = () => {
+  return (
+    <div className="pt-24 pb-24 px-4 min-h-screen max-w-7xl mx-auto flex flex-col items-center">
+      
+      {/* Top Navigation for Sub-pages */}
+      <PageHeader />
+
+      <div className="text-center mb-16 animate-fade-in-down w-full">
+          <h2 className="text-gold font-serif text-sm tracking-[0.3em] uppercase mb-2">The Saga</h2>
+          <h3 className="text-3xl md:text-5xl font-serif text-white font-bold">아르카디아 : 신이 떠난 낙원</h3>
+          <div className="h-1 w-20 bg-gold mx-auto mt-6"></div>
+      </div>
+      
+      <div className="glass-panel p-6 md:p-12 max-w-6xl text-gray-300 leading-8 space-y-8 font-serif text-lg">
+        {/* Quote Section */}
+        <div className="text-center space-y-4">
+            <p className="text-xl md:text-3xl font-bold text-white border-y border-white/10 py-8 px-4 leading-normal">
+            "별의 운명을 결정하는 것은<br className="md:hidden"/> 신이 아니라, <span className="text-gold">당신</span>입니다."
+            </p>
+        </div>
+        
+        {/* Intro Text */}
+        <div className="prose prose-invert max-w-4xl mx-auto space-y-6 px-2 md:px-8">
+            <p className="text-justify leading-loose">
+            <span className="text-gold font-bold text-3xl float-left mr-2 mt-[-4px]">태</span>초의 신들이 무의 공간에서 질서와 빛으로 낙원 <strong className="text-white">'아르카디아'</strong>를 창조했습니다. 그러나 그 완벽한 질서를 시기한 심연의 혼돈 군주들이 차원의 벽을 찢고 침공을 시작하며, 낙원은 불길에 휩싸였습니다.
+            </p>
+            <p className="text-justify leading-loose">
+            신들은 수천 년에 걸친 '신화 대전' 끝에 자신들의 영혼을 코어에 갈아 넣어 군주들을 차원의 틈새에 봉인했습니다. 그 대가로 신들은 육신을 잃고 영원한 잠에 빠져들었으며, 그들의 권능은 대지 곳곳에 파편으로 흩어졌습니다. 그러나 오랜 세월이 흘러 신들의 힘이 희미해지자, 균열 너머에서 다시금 군주들의 속삭임이 들려오기 시작했습니다.
+            </p>
+        </div>
+
+        {/* Divider */}
+        <div className="py-8 flex items-center justify-center gap-4 opacity-50">
+             <div className="h-px bg-gradient-to-r from-transparent via-gold to-transparent flex-1"></div>
+             <div className="w-2 h-2 rotate-45 bg-gold"></div>
+             <div className="h-px bg-gradient-to-r from-transparent via-gold to-transparent flex-1"></div>
+        </div>
+
+        {/* Nations Section Title */}
+        <div className="text-center mb-8">
+            <h3 className="text-2xl text-white font-bold mb-2">분열된 대륙, 세 개의 힘</h3>
+            <p className="text-sm text-gray-500">각기 다른 신념으로 아르카디아를 지탱하는 3대 강국</p>
+        </div>
+
+        {/* Enhanced Nation Cards */}
+        <div className="grid md:grid-cols-3 gap-6">
+           {/* East: Nature/Gold/Green */}
+           <div className="relative group overflow-hidden rounded-xl bg-gradient-to-b from-[#1a1f0a] to-black border border-emerald-900/30 hover:border-emerald-500/50 transition-all duration-300 p-8 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(16,185,129,0.1)]">
+             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:scale-110 duration-700">
+               <Mountain size={80} className="text-emerald-500" />
+             </div>
+             <div className="relative z-10">
+                <h4 className="text-emerald-400 font-bold text-2xl mb-1 flex items-center gap-3">
+                    <Mountain size={24} />
+                    동방 제국
+                </h4>
+                <p className="text-xs text-emerald-100/40 uppercase tracking-[0.2em] mb-6 font-sans">Eastern Empire</p>
+                <div className="h-px w-12 bg-emerald-500/50 mb-6"></div>
+                <p className="text-gray-400 text-base leading-relaxed font-sans">
+                자연과 조화를 이루는 무술과 정령술의 본고장. 울창한 산림 속에 가려진 신비로운 힘을 숭상하며, 고대의 전통을 지키는 무인들의 나라입니다.
+                </p>
+             </div>
+           </div>
+
+           {/* West: Machine/Blue */}
+           <div className="relative group overflow-hidden rounded-xl bg-gradient-to-b from-[#0a1525] to-black border border-blue-900/30 hover:border-blue-500/50 transition-all duration-300 p-8 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(59,130,246,0.1)]">
+             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:scale-110 duration-700">
+               <Cog size={80} className="text-blue-500" />
+             </div>
+             <div className="relative z-10">
+                <h4 className="text-blue-400 font-bold text-2xl mb-1 flex items-center gap-3">
+                    <Cog size={24} />
+                    서부 연방
+                </h4>
+                <p className="text-xs text-blue-100/40 uppercase tracking-[0.2em] mb-6 font-sans">Western Federation</p>
+                <div className="h-px w-12 bg-blue-500/50 mb-6"></div>
+                <p className="text-gray-400 text-base leading-relaxed font-sans">
+                증기기관과 마도공학이 융합된 강철의 대지. 하늘을 뒤덮은 공장 연기와 거대한 톱니바퀴가 돌아가는, 혁신과 이성의 산업 국가입니다.
+                </p>
+             </div>
+           </div>
+
+           {/* South: Dark/Red */}
+           <div className="relative group overflow-hidden rounded-xl bg-gradient-to-b from-[#250505] to-black border border-red-900/30 hover:border-red-500/50 transition-all duration-300 p-8 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(220,38,38,0.1)]">
+             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:scale-110 duration-700">
+               <Skull size={80} className="text-red-600" />
+             </div>
+             <div className="relative z-10">
+                <h4 className="text-red-500 font-bold text-2xl mb-1 flex items-center gap-3">
+                    <Skull size={24} />
+                    남부 왕국
+                </h4>
+                <p className="text-xs text-red-100/40 uppercase tracking-[0.2em] mb-6 font-sans">Southern Kingdom</p>
+                <div className="h-px w-12 bg-red-500/50 mb-6"></div>
+                <p className="text-gray-400 text-base leading-relaxed font-sans">
+                흑마법과 고딕 양식이 지배하는 어둠의 대륙. 악마의 힘마저 통제하여 힘으로 승화시킨, 귀족들의 냉혹하지만 강력한 국가입니다.
+                </p>
+             </div>
+           </div>
+        </div>
+
+        {/* Footer Text */}
+        <div className="mt-12 p-8 bg-gradient-to-r from-transparent via-white/5 to-transparent text-center rounded-xl border-t border-b border-white/5">
+            <p className="text-gray-300 text-lg">
+            고대 문명의 유산과 현대의 마법 기술이 공존하는 이 대항해 시대에, 봉인은 한계에 다다랐습니다.<br className="hidden md:block"/>
+            이제 아르카디아의 평화는 신의 기적이 아닌, 바로 <strong className="text-gold text-xl mx-1">'수호자'</strong>인 당신의 칼끝에 달려 있습니다.
+            </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default StoryPage;

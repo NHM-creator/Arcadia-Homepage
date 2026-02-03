@@ -27,8 +27,8 @@ const WorldInfo: React.FC = () => {
   const getSectionBackground = () => {
     switch(hoveredId) {
       case 'raid': return 'bg-[#1a0505] shadow-[inset_0_0_150px_rgba(150,0,0,0.3)]'; // Hellish Red
-      case 'life': return 'bg-[#051a0a] shadow-[inset_0_0_150px_rgba(0,100,50,0.3)]'; // Greenish Meadow
-      case 'fashion': return 'bg-[#252025] shadow-[inset_0_0_150px_rgba(200,200,200,0.2)]'; // Soft White/Pinkish Dark
+      case 'guild': return 'bg-[#0a0f2b] shadow-[inset_0_0_150px_rgba(30,58,138,0.3)]'; // Guild Blue/Navy
+      case 'avatar': return 'bg-[#252025] shadow-[inset_0_0_150px_rgba(200,100,200,0.2)]'; // Soft Pink/Purple
       default: return 'bg-transparent';
     }
   };
@@ -68,7 +68,7 @@ const WorldInfo: React.FC = () => {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-gold font-serif text-sm tracking-[0.3em] uppercase mb-2">Game Features</h2>
-          <h3 className="text-4xl md:text-5xl font-serif text-white font-bold">아르카디아의 세계</h3>
+          <h3 className="text-4xl md:text-5xl font-serif text-white font-bold">아르카디아 콘텐츠</h3>
           <div className="h-1 w-20 bg-gold mx-auto mt-6"></div>
         </div>
 
@@ -88,15 +88,15 @@ const WorldInfo: React.FC = () => {
                     <div className="absolute bottom-0 w-full h-1/2 bg-red-600/10 blur-xl animate-pulse"></div>
                   </div>
                 );
-            } else if (feature.id === 'life') {
-                borderClass = "group-hover:border-emerald-500";
+            } else if (feature.id === 'guild') {
+                borderClass = "group-hover:border-blue-500";
                 overlayEffect = (
                    <div className={`absolute inset-0 pointer-events-none transition-opacity duration-700 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
-                    <div className="absolute inset-0 bg-gradient-to-tr from-emerald-900/80 via-cyan-500/10 to-transparent mix-blend-overlay"></div>
-                    <div className="absolute -left-1/2 top-0 w-full h-full bg-cyan-400/10 blur-2xl animate-pulse transform rotate-45"></div>
+                    <div className="absolute inset-0 bg-gradient-to-tr from-blue-900/80 via-cyan-500/10 to-transparent mix-blend-overlay"></div>
+                    <div className="absolute -left-1/2 top-0 w-full h-full bg-blue-400/10 blur-2xl animate-pulse transform rotate-45"></div>
                   </div>
                 );
-            } else if (feature.id === 'fashion') {
+            } else if (feature.id === 'avatar') {
                 borderClass = "group-hover:border-pink-300";
                 overlayEffect = (
                    <div className={`absolute inset-0 pointer-events-none transition-opacity duration-700 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
@@ -127,7 +127,7 @@ const WorldInfo: React.FC = () => {
 
                 {/* Content */}
                 <div className="absolute inset-0 p-8 flex flex-col justify-end z-10">
-                  <div className={`mb-4 transform transition-all duration-300 group-hover:-translate-y-2 drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] ${isHovered && feature.id === 'raid' ? 'text-red-500' : isHovered && feature.id === 'life' ? 'text-emerald-400' : isHovered && feature.id === 'fashion' ? 'text-pink-300' : 'text-gold'}`}>
+                  <div className={`mb-4 transform transition-all duration-300 group-hover:-translate-y-2 drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] ${isHovered && feature.id === 'raid' ? 'text-red-500' : isHovered && feature.id === 'guild' ? 'text-blue-400' : isHovered && feature.id === 'avatar' ? 'text-pink-300' : 'text-gold'}`}>
                     {iconMap[feature.icon]}
                   </div>
                   
@@ -135,16 +135,16 @@ const WorldInfo: React.FC = () => {
                     {feature.title}
                   </h4>
                   
-                  <h5 className="text-sm text-gray-400 uppercase tracking-wider mb-4 transform transition-transform duration-300 group-hover:-translate-y-2">
+                  <h5 className="text-sm text-gray-400 uppercase tracking-wider mb-4 transform transition-transform duration-300 group-hover:-translate-y-2 whitespace-pre-line">
                     {feature.subtitle}
                   </h5>
                   
-                  <p className="text-gray-300 font-sans leading-relaxed opacity-0 transform translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
+                  <p className="text-gray-300 font-sans leading-relaxed opacity-0 transform translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0 text-sm whitespace-pre-line">
                     {feature.description}
                   </p>
 
                   {/* Animated Line */}
-                  <div className={`absolute bottom-0 left-0 w-0 h-1 transition-all duration-700 group-hover:w-full ${feature.id === 'raid' ? 'bg-red-600' : feature.id === 'life' ? 'bg-emerald-500' : feature.id === 'fashion' ? 'bg-pink-300' : 'bg-gradient-to-r from-gold to-magenta'}`}></div>
+                  <div className={`absolute bottom-0 left-0 w-0 h-1 transition-all duration-700 group-hover:w-full ${feature.id === 'raid' ? 'bg-red-600' : feature.id === 'guild' ? 'bg-blue-500' : feature.id === 'avatar' ? 'bg-pink-300' : 'bg-gradient-to-r from-gold to-magenta'}`}></div>
                 </div>
               </div>
             );
