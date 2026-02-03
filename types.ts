@@ -1,5 +1,7 @@
 export type RoleType = 'TANK' | 'DEALER' | 'SUPPORT';
 
+export type NationType = 'EAST' | 'WEST' | 'SOUTH';
+
 export interface ClassStats {
   attack: number;
   defense: number;
@@ -12,6 +14,7 @@ export interface ClassData {
   id: string;
   name: string;
   role: RoleType;
+  nation: NationType;
   tagline: string;
   weapon: string;
   description: string;

@@ -30,8 +30,8 @@ const Hero: React.FC = () => {
         </div>
 
         {/* Catchphrase */}
-        <p className="font-serif text-xl md:text-2xl text-gray-200 mb-12 tracking-wider drop-shadow-md">
-          "신들이 떠난 낙원, 구원은 당신의 손에 달려 있습니다."
+        <p className="font-serif text-xl md:text-2xl text-gray-200 mb-12 tracking-wider drop-shadow-md leading-relaxed">
+          "신들이 떠난 낙원,<br />구원은 당신의 손에 달려 있습니다."
         </p>
 
         {/* 3 Main Buttons */}
@@ -76,19 +76,22 @@ const Hero: React.FC = () => {
              }}
            ></div>
            
-           <a 
-             href="https://share.crack.wrtn.ai/nr6uqy"
-             target="_blank"
-             rel="noopener noreferrer"
-             className="group relative px-10 py-5 bg-gradient-to-r from-gray-900 to-black text-gold font-bold font-serif text-xl tracking-[0.2em] border border-gold/50 hover:border-gold hover:shadow-[0_0_30px_rgba(255,215,0,0.3)] transition-all duration-300 clip-path-polygon inline-block"
-           >
-             <span className="flex items-center gap-3 relative z-10">
-               <Crown className="w-6 h-6" />
-               운명을 선택하라
-             </span>
-             {/* Button Inner Glow */}
-             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gold/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-           </a>
+           <div className="relative group">
+              {/* Back Light Shimmer Effect */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-gold/0 via-gold/30 to-gold/0 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 animate-pulse"></div>
+              
+              <a 
+                href="https://share.crack.wrtn.ai/nr6uqy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative z-10 px-10 py-5 bg-gradient-to-r from-gray-900 to-black text-gold font-bold font-serif text-xl tracking-[0.2em] border border-gold/50 hover:border-gold hover:shadow-[0_0_30px_rgba(255,215,0,0.3)] transition-all duration-300 hover:scale-105 clip-path-polygon inline-flex items-center gap-3"
+              >
+                <Crown className="w-6 h-6" />
+                운명을 선택하라
+                {/* Button Inner Glow */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gold/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              </a>
+           </div>
         </div>
       </div>
     </section>
