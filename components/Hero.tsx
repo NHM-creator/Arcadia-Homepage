@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import { HERO_VIDEO_PLACEHOLDER } from '../constants';
 
 const Hero: React.FC = () => {
-  const buttonBaseClass = "group relative w-52 py-4 bg-gradient-to-r from-gray-900 to-midnight text-gray-200 font-bold font-serif text-lg tracking-widest border border-white/20 transition-all duration-300 hover:scale-110 hover:border-gold hover:shadow-[0_0_20px_rgba(255,215,0,0.5)] flex items-center justify-center overflow-hidden";
+  // Removed specific hover colors from base class to apply them individually
+  const buttonBaseClass = "group relative w-52 py-4 bg-gradient-to-r from-gray-900 to-midnight text-gray-200 font-bold font-serif text-lg tracking-widest border border-white/20 transition-all duration-300 hover:scale-110 flex items-center justify-center overflow-hidden";
   
   return (
     <section id="hero" className="relative h-screen w-full overflow-hidden flex flex-col items-center justify-center">
@@ -36,8 +37,8 @@ const Hero: React.FC = () => {
         {/* 3 Main Buttons */}
         <div className="flex flex-col md:flex-row gap-6 items-center justify-center mb-16">
           
-          {/* Button 1: Worldview (Yellow) */}
-          <Link to="/story" className={buttonBaseClass}>
+          {/* Button 1: Worldview (Yellow/Gold) */}
+          <Link to="/story" className={`${buttonBaseClass} hover:border-gold hover:shadow-[0_0_20px_rgba(255,215,0,0.5)]`}>
             <span className="flex items-center gap-2 relative z-10 group-hover:text-white transition-colors">
               <ScrollText className="w-5 h-5 text-white group-hover:text-gold transition-colors" />
               세계관
@@ -46,7 +47,7 @@ const Hero: React.FC = () => {
           </Link>
           
           {/* Button 2: Contents (Blue) */}
-          <Link to="/contents" className={buttonBaseClass}>
+          <Link to="/contents" className={`${buttonBaseClass} hover:border-blue-400 hover:shadow-[0_0_20px_rgba(96,165,250,0.5)]`}>
             <span className="flex items-center gap-2 relative z-10 group-hover:text-white transition-colors">
               <Gamepad2 className="w-6 h-6 text-white group-hover:text-blue-400 transition-colors" />
               콘텐츠
@@ -55,7 +56,7 @@ const Hero: React.FC = () => {
           </Link>
 
           {/* Button 3: Classes (Red) */}
-          <Link to="/classes" className={buttonBaseClass}>
+          <Link to="/classes" className={`${buttonBaseClass} hover:border-red-500 hover:shadow-[0_0_20px_rgba(239,68,68,0.5)]`}>
             <span className="flex items-center gap-2 relative z-10 group-hover:text-white transition-colors">
               <Swords className="w-5 h-5 text-white group-hover:text-red-500 transition-colors" />
               클래스

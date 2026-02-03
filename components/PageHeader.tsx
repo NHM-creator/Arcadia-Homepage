@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { Home, ScrollText, Gamepad2, Swords, Crown } from 'lucide-react';
 
 const PageHeader: React.FC = () => {
-  const buttonClass = "group relative w-32 md:w-40 py-3 bg-gradient-to-r from-gray-900 to-midnight text-gray-200 font-bold font-serif text-sm md:text-base tracking-widest border border-white/20 transition-all duration-300 hover:scale-105 hover:border-gold hover:shadow-[0_0_15px_rgba(255,215,0,0.4)] flex items-center justify-center overflow-hidden";
+  // Removed specific hover colors from base class to apply them individually
+  const buttonClass = "group relative w-32 md:w-40 py-3 bg-gradient-to-r from-gray-900 to-midnight text-gray-200 font-bold font-serif text-sm md:text-base tracking-widest border border-white/20 transition-all duration-300 hover:scale-105 flex items-center justify-center overflow-hidden";
   
   return (
     <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 max-w-7xl mx-auto px-4 mb-12 relative z-50">
@@ -19,8 +20,8 @@ const PageHeader: React.FC = () => {
 
       {/* Center: Navigation Buttons */}
       <div className="flex gap-4">
-        {/* Worldview: Yellow */}
-        <Link to="/story" className={buttonClass}>
+        {/* Worldview: Yellow (Gold) */}
+        <Link to="/story" className={`${buttonClass} hover:border-gold hover:shadow-[0_0_15px_rgba(255,215,0,0.4)]`}>
           <span className="flex items-center gap-2 relative z-10 group-hover:text-white transition-colors">
             <ScrollText className="w-4 h-4 text-white group-hover:text-gold transition-colors" />
             세계관
@@ -29,7 +30,7 @@ const PageHeader: React.FC = () => {
         </Link>
         
         {/* Contents: Blue */}
-        <Link to="/contents" className={buttonClass}>
+        <Link to="/contents" className={`${buttonClass} hover:border-blue-400 hover:shadow-[0_0_15px_rgba(96,165,250,0.4)]`}>
           <span className="flex items-center gap-2 relative z-10 group-hover:text-white transition-colors">
             <Gamepad2 className="w-5 h-5 text-white group-hover:text-blue-400 transition-colors" />
             콘텐츠
@@ -38,7 +39,7 @@ const PageHeader: React.FC = () => {
         </Link>
 
         {/* Classes: Red */}
-        <Link to="/classes" className={buttonClass}>
+        <Link to="/classes" className={`${buttonClass} hover:border-red-500 hover:shadow-[0_0_15px_rgba(239,68,68,0.4)]`}>
           <span className="flex items-center gap-2 relative z-10 group-hover:text-white transition-colors">
             <Swords className="w-4 h-4 text-white group-hover:text-red-500 transition-colors" />
             클래스
