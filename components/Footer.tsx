@@ -10,8 +10,8 @@ const Footer: React.FC = () => {
         <div className="flex flex-col items-center md:items-start gap-4">
           <h2 className="font-serif text-2xl font-bold text-white tracking-widest">ARCADIA</h2>
           <div className="flex items-center gap-3 border border-gray-700 px-3 py-1 rounded bg-gray-900">
-             <div className="w-8 h-8 bg-red-600 flex items-center justify-center text-white font-bold text-xs rounded">18+</div>
-             <span className="text-xs">폭력성, 혈흔, 유저 간 상호작용</span>
+             <div className="w-8 h-8 bg-yellow-500 flex items-center justify-center text-black font-bold text-xs rounded">15+</div>
+             <span className="text-xs">폭력성, 유저 간 상호작용</span>
           </div>
         </div>
 

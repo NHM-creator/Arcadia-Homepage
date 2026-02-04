@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { 
   Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer 
 } from 'recharts';
 import { CLASSES } from '../constants';
 import { RoleType, NationType } from '../types';
-import { Shield, Swords, Heart, ChevronLeft, ChevronRight, Info, Mountain, Cog, Skull, Users } from 'lucide-react';
+import { Shield, Swords, Heart, ChevronLeft, ChevronRight, Info, Mountain, Cog, Skull, Users, X } from 'lucide-react';
 
 interface ClassSystemProps {
   selectedRole: RoleType;
@@ -36,12 +36,66 @@ const STAT_DESCRIPTIONS: Record<RoleType, Record<string, string[]>> = {
   }
 };
 
+// Role Details for Modal
+const ROLE_INFO: Record<RoleType, { label: string; engLabel: string; icon: React.ElementType; desc: string }> = {
+  TANK: {
+    label: '탱커',
+    engLabel: 'Tanker',
+    icon: Shield,
+    desc: `
+      <span class="hidden md:block">
+        최전선에서 적의 공격을 받아내며<br/>아군을 보호하는 든든한 방패입니다.<br/>높은 생존력과 군중 제어기로 전선을 유지합니다.
+      </span>
+      <span class="md:hidden">
+        최전선에서 적의 공격을 받아내며<br/>
+        아군을 보호하는 든든한 방패입니다.<br/>
+        높은 생존력과 군중 제어기로<br/>
+        전선을 유지합니다.
+      </span>
+    `
+  },
+  DEALER: {
+    label: '딜러',
+    engLabel: 'Dealer',
+    icon: Swords,
+    desc: `
+      <span class="hidden md:block">
+        강력한 공격으로 적을 제압하는<br/>파티의 핵심 공격수입니다.<br/>다양한 거리와 방식의 전투 스타일로 적을 섬멸합니다.
+      </span>
+      <span class="md:hidden">
+        강력한 공격으로 적을 제압하는<br/>
+        파티의 핵심 공격수입니다.<br/>
+        다양한 거리와 방식의 전투 스타일로<br/>
+        적을 섬멸합니다.
+      </span>
+    `
+  },
+  SUPPORT: {
+    label: '서포터',
+    engLabel: 'Supporter',
+    icon: Heart,
+    desc: `
+      <span class="hidden md:block">
+        치유와 강화를 통해 아군을 돕는<br/>전장의 지휘자입니다.<br/>파티원의 생존을 책임지고 능력을 극대화합니다.
+      </span>
+      <span class="md:hidden">
+        치유와 강화를 통해 아군을 돕는<br/>
+        전장의 지휘자입니다.<br/>
+        파티원의 생존을 책임지고<br/>
+        능력을 극대화합니다.
+      </span>
+    `
+  }
+};
+
 type FilterMode = 'ROLE' | 'NATION';
 
 const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange }) => {
   const [filterMode, setFilterMode] = useState<FilterMode>('ROLE');
   const [selectedNation, setSelectedNation] = useState<NationType>('WEST');
   const [selectedClassId, setSelectedClassId] = useState<string>('iron-fort'); 
+  const [viewingNation, setViewingNation] = useState<NationType | null>(null);
+  const [viewingRole, setViewingRole] = useState<RoleType | null>(null);
   
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [hoveredStat, setHoveredStat] = useState<{ subject: string; value: number; description: string } | null>(null);
@@ -51,6 +105,18 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const minSwipeDistance = 50;
+
+  // Generate random stars for this section
+  const stars = useMemo(() => {
+    return Array.from({ length: 60 }).map((_, i) => ({
+      id: i,
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      size: Math.random() < 0.4 ? 2 : 1.5,
+      animationDelay: `${Math.random() * 4}s`,
+      opacity: 0.2 + Math.random() * 0.6
+    }));
+  }, []);
 
   // Sync initial class when role changes from props (e.g. initial load)
   useEffect(() => {
@@ -346,6 +412,7 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
     }
   };
   const nationInfo = getNationInfo(selectedClass.nation);
+  const roleInfo = ROLE_INFO[selectedClass.role];
   
   const hasMultipleImages = selectedClass.imageUrls.length > 1;
 
@@ -392,6 +459,265 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
     );
   };
 
+  // Helper to render nation detail modal
+  const renderNationModal = () => {
+    if (!viewingNation) return null;
+
+    let content = {
+        icon: Mountain,
+        name: '',
+        engName: '',
+        desc: '',
+        colorClass: '',
+        borderClass: '',
+        shadowClass: '',
+        glowClass: '',
+        textClass: '',
+        iconColor: '',
+    };
+
+    if (viewingNation === 'EAST') {
+        content = {
+            icon: Mountain,
+            name: '동방 제국',
+            engName: 'Eastern Empire',
+            desc: `
+                <span class="hidden md:block">
+                    자연과 조화를 이루는 무술과 정령술의 본고장.<br/>
+                    울창한 산림 속에 가려진 신비로운 힘을 숭상하며,<br/>
+                    고대의 전통을 지키는 무인들의 나라입니다.
+                </span>
+                <span class="md:hidden">
+                    자연과 조화를 이루는<br/>
+                    무술과 정령술의 본고장.<br/>
+                    울창한 산림 속에 가려진<br/>
+                    신비로운 힘을 숭상하며,<br/>
+                    고대의 전통을 지키는<br/>
+                    무인들의 나라입니다.
+                </span>
+            `,
+            colorClass: 'bg-emerald-500',
+            borderClass: 'border-emerald-400/80',
+            shadowClass: 'shadow-[0_0_30px_rgba(16,185,129,0.3)]',
+            glowClass: 'bg-emerald-500/40',
+            textClass: 'text-emerald-400',
+            iconColor: 'text-emerald-500',
+        };
+    } else if (viewingNation === 'WEST') {
+        content = {
+            icon: Cog,
+            name: '서부 연방',
+            engName: 'Western Federation',
+            desc: `
+                <span class="hidden md:block">
+                    증기기관과 마도공학이 융합된 강철의 대지.<br/>
+                    하늘을 뒤덮은 공장 연기와<br/>
+                    거대한 톱니바퀴가 돌아가는,<br/>
+                    혁신과 이성의 산업 국가입니다.
+                </span>
+                <span class="md:hidden">
+                    증기기관과 마도공학이 융합된<br/>
+                    강철의 대지.<br/>
+                    하늘을 뒤덮은 공장 연기와<br/>
+                    거대한 톱니바퀴가 돌아가는,<br/>
+                    혁신과 이성의 산업 국가입니다.
+                </span>
+            `,
+            colorClass: 'bg-blue-500',
+            borderClass: 'border-blue-400/80',
+            shadowClass: 'shadow-[0_0_30px_rgba(59,130,246,0.3)]',
+            glowClass: 'bg-blue-500/40',
+            textClass: 'text-blue-400',
+            iconColor: 'text-blue-500',
+        };
+    } else if (viewingNation === 'SOUTH') {
+        content = {
+            icon: Skull,
+            name: '남부 왕국',
+            engName: 'Southern Kingdom',
+            desc: `
+                <span class="hidden md:block">
+                    흑마법과 고딕 양식이 지배하는 어둠의 대륙.<br/>
+                    악마의 힘마저 통제하여 힘으로 승화시킨,<br/>
+                    귀족들의 냉혹하지만 강력한 국가입니다.
+                </span>
+                <span class="md:hidden">
+                    흑마법과 고딕 양식이 지배하는<br/>
+                    어둠의 대륙.<br/>
+                    악마의 힘마저 통제하여 힘으로 승화시킨,<br/>
+                    귀족들의 냉혹하지만 강력한 국가입니다.
+                </span>
+            `,
+            colorClass: 'bg-violet-600',
+            borderClass: 'border-violet-500/80',
+            shadowClass: 'shadow-[0_0_30px_rgba(139,92,246,0.3)]',
+            glowClass: 'bg-violet-600/40',
+            textClass: 'text-violet-500',
+            iconColor: 'text-violet-600',
+        };
+    }
+
+    const nationClasses = CLASSES.filter(c => c.nation === viewingNation);
+    const gridCols = 'grid-cols-2';
+
+    const handleModalClassClick = (classId: string) => {
+        setFilterMode('NATION');
+        setSelectedNation(viewingNation);
+        setSelectedClassId(classId);
+        setViewingNation(null);
+    };
+
+    return (
+        <div 
+            className="absolute inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-fade-in"
+            onClick={() => setViewingNation(null)}
+        >
+             <div 
+                className="relative w-full max-w-md group"
+                onClick={(e) => e.stopPropagation()}
+             >
+                 {/* Undulating Glow Effect */}
+                 <div className={`absolute -inset-1 rounded-xl blur-xl opacity-100 animate-pulse ${content.glowClass}`}></div>
+                 
+                 {/* Card Content */}
+                 <div className={`relative w-full h-auto overflow-hidden rounded-xl bg-black border p-8 shadow-lg ${content.borderClass} ${content.shadowClass} flex flex-col`}>
+                    {/* Close Button */}
+                    <button 
+                        onClick={() => setViewingNation(null)}
+                        className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-20"
+                    >
+                        <X size={24} />
+                    </button>
+
+                    <div className={`absolute top-0 right-0 p-4 opacity-30 scale-110 pointer-events-none`}>
+                      <content.icon size={80} className={content.iconColor} />
+                    </div>
+                    <div className="relative z-10">
+                        <h4 className={`${content.textClass} font-bold text-2xl mb-1 flex items-center gap-3`}>
+                            <content.icon size={24} />
+                            {content.name}
+                        </h4>
+                        <p className={`text-xs uppercase tracking-[0.2em] mb-6 font-sans opacity-60 text-white`}>{content.engName}</p>
+                        <div className={`h-px mb-6 w-full ${content.colorClass}`}></div>
+                        <p className="text-base leading-relaxed font-sans text-gray-200" dangerouslySetInnerHTML={{ __html: content.desc }}></p>
+                        
+                        {/* Class List Section */}
+                        <div className="mt-8">
+                             <h5 className={`text-xs font-bold uppercase tracking-widest mb-3 ${content.textClass} border-b border-white/10 pb-2`}>
+                                소속 클래스
+                             </h5>
+                             <div className={`grid ${gridCols} gap-3`}>
+                                {nationClasses.map(c => (
+                                    <button
+                                        key={c.id}
+                                        onClick={() => handleModalClassClick(c.id)}
+                                        className={`
+                                            text-left px-3 py-2 rounded border border-white/5 bg-white/5 
+                                            hover:bg-white/10 hover:border-white/20 transition-all duration-200
+                                            flex items-center gap-2 group/btn
+                                        `}
+                                    >
+                                        <div className={`w-1.5 h-1.5 rounded-full ${
+                                            c.role === 'TANK' ? 'bg-blue-500' : 
+                                            c.role === 'DEALER' ? 'bg-red-500' : 'bg-yellow-500'
+                                        }`}></div>
+                                        <span className="text-gray-300 group-hover/btn:text-white text-xs md:text-sm font-serif truncate">
+                                            {c.name}
+                                        </span>
+                                    </button>
+                                ))}
+                             </div>
+                        </div>
+                    </div>
+                 </div>
+             </div>
+        </div>
+    );
+  };
+
+  // Helper to render role detail modal
+  const renderRoleModal = () => {
+    if (!viewingRole) return null;
+
+    const info = ROLE_INFO[viewingRole];
+    let themeColors = {
+      bg: 'bg-gray-800',
+      border: 'border-gray-600',
+      text: 'text-gray-200',
+      glow: 'bg-gray-500/40',
+      shadow: 'shadow-lg'
+    };
+
+    switch(viewingRole) {
+      case 'TANK':
+        themeColors = {
+          bg: 'bg-blue-600',
+          border: 'border-blue-400/80',
+          text: 'text-blue-400',
+          glow: 'bg-blue-600/40',
+          shadow: 'shadow-[0_0_30px_rgba(59,130,246,0.3)]'
+        };
+        break;
+      case 'DEALER':
+        themeColors = {
+          bg: 'bg-red-600',
+          border: 'border-red-500/80',
+          text: 'text-red-500',
+          glow: 'bg-red-600/40',
+          shadow: 'shadow-[0_0_30px_rgba(220,38,38,0.3)]'
+        };
+        break;
+      case 'SUPPORT':
+        themeColors = {
+          bg: 'bg-yellow-500',
+          border: 'border-yellow-400/80',
+          text: 'text-yellow-400',
+          glow: 'bg-yellow-500/40',
+          shadow: 'shadow-[0_0_30px_rgba(234,179,8,0.3)]'
+        };
+        break;
+    }
+
+    return (
+      <div 
+          className="absolute inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-fade-in"
+          onClick={() => setViewingRole(null)}
+      >
+           <div 
+              className="relative w-full max-w-md group"
+              onClick={(e) => e.stopPropagation()}
+           >
+               {/* Undulating Glow Effect */}
+               <div className={`absolute -inset-1 rounded-xl blur-xl opacity-100 animate-pulse ${themeColors.glow}`}></div>
+               
+               {/* Card Content */}
+               <div className={`relative w-full h-auto overflow-hidden rounded-xl bg-black border p-8 shadow-lg ${themeColors.border} ${themeColors.shadow} flex flex-col`}>
+                  {/* Close Button */}
+                  <button 
+                      onClick={() => setViewingRole(null)}
+                      className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-20"
+                  >
+                      <X size={24} />
+                  </button>
+
+                  <div className={`absolute top-0 right-0 p-4 opacity-30 scale-110 pointer-events-none`}>
+                    <info.icon size={80} className={themeColors.text} />
+                  </div>
+                  <div className="relative z-10">
+                      <h4 className={`${themeColors.text} font-bold text-2xl mb-1 flex items-center gap-3`}>
+                          <info.icon size={24} />
+                          {info.label}
+                      </h4>
+                      <p className={`text-xs uppercase tracking-[0.2em] mb-6 font-sans opacity-60 text-white`}>{info.engLabel}</p>
+                      <div className={`h-px mb-6 w-full ${themeColors.bg}`}></div>
+                      <p className="text-base leading-relaxed font-sans text-gray-200" dangerouslySetInnerHTML={{ __html: info.desc }}></p>
+                  </div>
+               </div>
+           </div>
+      </div>
+    );
+  };
+
   return (
     <section id="class" className="py-24 px-4 md:px-12 relative border-t border-white/5 overflow-hidden">
        {/* Background Layer Container */}
@@ -430,12 +756,36 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
           )}
        </div>
 
+       {/* Stars Layer */}
+       <div className="absolute inset-0 pointer-events-none">
+        {stars.map((star) => (
+           <div
+            key={star.id}
+            className="absolute rounded-full bg-white animate-twinkle"
+            style={{
+              left: star.left,
+              top: star.top,
+              width: `${star.size}px`,
+              height: `${star.size}px`,
+              animationDelay: star.animationDelay,
+              opacity: star.opacity,
+            }}
+          />
+        ))}
+       </div>
+
       <div className="max-w-[1600px] mx-auto relative z-10">
         
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 animate-fade-in-down">
           <h2 className="text-gold font-serif text-sm tracking-[0.3em] uppercase mb-2">Class System</h2>
           <h3 className="text-4xl md:text-5xl font-serif text-white font-bold">운명을 선택하라</h3>
+          {/* Diamond Divider with Animation */}
+          <div className="flex items-center justify-center gap-4 mt-6">
+             <div className="h-px w-8 md:w-16 bg-gradient-to-r from-transparent via-gold to-transparent opacity-0 animate-[expandX_1s_ease-out_forwards] origin-right" style={{ animationDelay: '600ms' }}></div>
+             <div className="w-1.5 h-1.5 bg-gold opacity-0 animate-diamond-pop" style={{ animationDelay: '400ms' }}></div>
+             <div className="h-px w-8 md:w-16 bg-gradient-to-r from-transparent via-gold to-transparent opacity-0 animate-[expandX_1s_ease-out_forwards] origin-left" style={{ animationDelay: '600ms' }}></div>
+          </div>
         </div>
 
         {/* Mobile/Tablet Controls Container */}
@@ -496,8 +846,14 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
         </div>
 
         {/* Main Layout */}
-        <div className="flex flex-col lg:flex-row items-start justify-center gap-8">
+        <div className="flex flex-col lg:flex-row items-start justify-center gap-8 relative">
           
+          {/* Nation Modal Overlay */}
+          {renderNationModal()}
+          
+          {/* Role Modal Overlay */}
+          {renderRoleModal()}
+
           {/* Left Sidebar: Nations */}
           <div className="hidden lg:block sticky top-24">
              {renderSidebar('NATION')}
@@ -526,8 +882,10 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
                     alt={selectedClass.name}
                     className="max-h-[500px] w-auto object-contain drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)] animate-fade-in-up transition-opacity duration-300"
                     style={{
-                        maskImage: 'radial-gradient(ellipse at center, black 60%, transparent 100%)',
-                        WebkitMaskImage: 'radial-gradient(ellipse at center, black 60%, transparent 100%)'
+                        maskImage: 'linear-gradient(to bottom, transparent, black 15%, black 85%, transparent), linear-gradient(to right, transparent, black 15%, black 85%, transparent)',
+                        WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 15%, black 85%, transparent), linear-gradient(to right, transparent, black 15%, black 85%, transparent)',
+                        maskComposite: 'intersect',
+                        WebkitMaskComposite: 'source-in'
                     }}
                   />
                   
@@ -541,6 +899,7 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
                           rounded-full border-2 ${theme.border} ${theme.text} 
                           hover:bg-white hover:text-black 
                           transition-all backdrop-blur-md z-30 shadow-lg
+                          lg:opacity-0 lg:group-hover:opacity-100
                         `}
                       >
                         <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" strokeWidth={3} />
@@ -553,6 +912,7 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
                           rounded-full border-2 ${theme.border} ${theme.text} 
                           hover:bg-white hover:text-black 
                           transition-all backdrop-blur-md z-30 shadow-lg
+                          lg:opacity-0 lg:group-hover:opacity-100
                         `}
                       >
                         <ChevronRight className="w-5 h-5 md:w-6 md:h-6" strokeWidth={3} />
@@ -603,10 +963,16 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
               <div className="lg:col-span-4 lg:order-3 p-8 flex flex-col justify-center bg-gradient-to-bl from-white/5 to-transparent order-2">
                 <div className="mb-2">
                   <div className="flex items-center gap-2 mb-4">
-                    {/* Badge uses theme.badgeBg to match the current mode */}
-                    <span className={`inline-block px-3 py-1 text-xs font-bold text-white rounded-sm ${theme.badgeBg}`}>
-                      {selectedClass.role === 'TANK' ? '탱커' : selectedClass.role === 'DEALER' ? '딜러' : '서포터'}
-                    </span>
+                    {/* Role Badge - Clickable for popup */}
+                    <button
+                        onClick={() => setViewingRole(selectedClass.role)}
+                        className={`flex items-center gap-1.5 px-3 py-1 text-xs font-bold text-white rounded-sm ${theme.badgeBg} hover:brightness-110 hover:scale-105 transition-all shadow-md cursor-pointer`}
+                        title="직업 정보 보기"
+                    >
+                       <span>{selectedClass.role === 'TANK' ? '탱커' : selectedClass.role === 'DEALER' ? '딜러' : '서포터'}</span>
+                       <roleInfo.icon size={14} className="text-white" />
+                    </button>
+
                     {hasMultipleImages && (
                         <span className={`inline-block px-3 py-1 text-xs font-bold border rounded-sm ${theme.text} ${theme.border} bg-black/40 flex items-center gap-1`}>
                           <Users size={12} />
@@ -618,10 +984,14 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
                   <div className="flex items-end gap-3 mb-1">
                     <h2 className="text-4xl font-serif text-white font-bold">{selectedClass.name}</h2>
                     
-                    {/* Nation Icon with Tooltip */}
-                    <div className="group relative mb-1 cursor-help">
+                    {/* Nation Icon with Tooltip & Click Handler */}
+                    <div 
+                      className="group relative mb-1 cursor-pointer hover:scale-110 transition-transform duration-300"
+                      onClick={() => setViewingNation(selectedClass.nation)}
+                      title="국가 정보 보기"
+                    >
                         <nationInfo.icon className={`w-6 h-6 ${nationInfo.color}`} />
-                        <div className="absolute left-1/2 -translate-x-1/2 -top-8 px-2 py-1 bg-black/90 border border-white/20 text-white text-xs whitespace-nowrap rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                        <div className="absolute left-1/2 -translate-x-1/2 -top-8 px-2 py-1 bg-black/90 border border-white/20 text-white text-xs whitespace-nowrap rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
                           {nationInfo.name}
                         </div>
                     </div>
@@ -691,28 +1061,30 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
                        }
                     </span>
                  </div>
-                 <div className="flex flex-col gap-2">
+                 {/* Changed to 1 column layout for all modes */}
+                 <div className="grid grid-cols-1 gap-2">
                    {filteredClasses.length > 0 ? (
                      filteredClasses.map((c) => (
                       <button
                         key={c.id}
                         onClick={() => handleClassClick(c.id)}
                         className={`
-                          w-full text-left p-4 rounded-lg transition-all border-l-4
+                          w-full text-left p-3 rounded-lg transition-all border-l-4
+                          flex flex-col justify-center min-h-[80px]
                           ${selectedClassId === c.id 
-                            ? `border-${theme.border.replace('border-', '')} text-white` 
+                            ? `border-${theme.border.replace('border-', '')} bg-white/10 text-white` 
                             : 'border-transparent text-gray-500 hover:bg-white/5 hover:text-gray-300'}
                         `}
                       >
-                        <span className="block font-serif font-bold text-lg flex items-center gap-2">
+                        <span className="font-serif font-bold text-sm md:text-base flex items-center gap-1 mb-1">
                           {c.name}
-                          {c.imageUrls.length > 1 && <Users size={16} className={theme.text} />}
+                          {c.imageUrls.length > 1 && <Users size={12} className={theme.text} />}
                         </span>
-                        <span className="block text-xs font-sans uppercase tracking-wider opacity-60">{c.weapon}</span>
+                        <span className="text-[10px] md:text-xs font-sans uppercase tracking-wider opacity-60 truncate w-full">{c.weapon}</span>
                       </button>
                      ))
                    ) : (
-                     <div className="p-8 text-center text-gray-500 text-sm">
+                     <div className="col-span-2 p-8 text-center text-gray-500 text-sm">
                        해당 분류에 클래스가 없습니다.
                      </div>
                    )}

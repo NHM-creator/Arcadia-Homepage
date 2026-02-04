@@ -20,10 +20,10 @@ const PageHeader: React.FC = () => {
         <div className="col-span-1 justify-self-start lg:absolute lg:left-0 lg:justify-self-auto order-1">
           <Link 
             to="/" 
-            className="w-10 h-10 lg:w-auto lg:h-auto p-2 lg:p-3 bg-midnight border border-white/20 text-gray-400 hover:text-white hover:border-gold hover:scale-110 transition-all rounded-full group flex items-center justify-center"
+            className="w-10 h-10 lg:w-auto lg:h-auto p-2 lg:p-3 bg-midnight border border-white/20 text-gray-400 hover:text-white hover:border-white hover:scale-110 transition-all rounded-full group flex items-center justify-center"
             aria-label="Home"
           >
-            <Home className="w-5 h-5 lg:w-6 lg:h-6 group-hover:text-gold transition-colors" />
+            <Home className="w-5 h-5 lg:w-6 lg:h-6 group-hover:text-white transition-colors" />
           </Link>
         </div>
 
@@ -33,7 +33,7 @@ const PageHeader: React.FC = () => {
             href="https://share.crack.wrtn.ai/nr6uqy"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative px-3 py-1 lg:px-6 lg:py-3 bg-black text-gold font-bold font-serif text-[10px] lg:text-sm tracking-widest border border-gold/30 hover:border-gold hover:shadow-[0_0_15px_rgba(255,215,0,0.3)] transition-all duration-300 clip-path-polygon flex items-center justify-center h-full"
+            className="group relative px-3 py-1 lg:px-6 lg:py-3 bg-black text-violet-400 font-bold font-serif text-[10px] lg:text-sm tracking-widest border border-violet-500/30 hover:border-violet-400 hover:text-violet-200 hover:shadow-[0_0_15px_rgba(167,139,250,0.3)] transition-all duration-300 hover:scale-105 clip-path-polygon flex items-center justify-center h-full"
           >
             <div className="flex flex-col lg:flex-row items-center gap-0.5 lg:gap-2 leading-tight lg:leading-normal">
                 <span className="flex items-center gap-1">
@@ -42,7 +42,8 @@ const PageHeader: React.FC = () => {
                 </span>
                 <span>선택하라</span>
             </div>
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gold/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            {/* Purple inner glow */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-violet-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           </a>
         </div>
 

@@ -27,7 +27,8 @@ export const FEATURES: FeatureData[] = [
     subtitle: '상상 그 이상의 스타일\n"당신의 모습 그 자체가 또 하나의 무기입니다."',
     description: '\'아바타 공방\'에서 의상의 질감, 패턴, 염색까지 세밀하게 조정하여 세상에 단 하나뿐인 디자인을 완성하십시오. 직접 제작한 아바타는 \'패션 마켓\'을 통해 다른 수호자들과 거래할 수 있습니다.',
     icon: 'Palette',
-    imageUrl: 'https://i.postimg.cc/zfT3SsJH/keoseuteomaijing.png'
+    imageUrl: 'https://i.postimg.cc/x1T343LF/공방_3.png',
+    hoverImageUrl: 'https://i.postimg.cc/Njfkzk1B/공방_2.png'
   }
 ];
 
