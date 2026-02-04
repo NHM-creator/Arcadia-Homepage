@@ -100,6 +100,16 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [hoveredStat, setHoveredStat] = useState<{ subject: string; value: number; description: string } | null>(null);
   const detailRef = useRef<HTMLDivElement>(null);
+  
+  // Responsive State
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Swipe State
   const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -159,7 +169,7 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
 
   const handleClassClick = (id: string) => {
     setSelectedClassId(id);
-    if (window.innerWidth < 1024 && detailRef.current) {
+    if (isMobile && detailRef.current) {
       detailRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
@@ -359,34 +369,65 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
     return 4; 
   };
 
-  const CustomTick = ({ payload, x, y, textAnchor, ...props }: any) => {
+  const CustomTick = ({ payload, x, y, cx, cy, textAnchor, ...props }: any) => {
     const dataEntry = radarData.find(d => d.subject === payload.value);
     const value = dataEntry ? dataEntry.A : 0;
     const isHovered = hoveredStat?.subject === payload.value;
     const isMultiLine = payload.value === '조작 난이도';
     
+    // Calculate outward offset to prevent overlap on mobile
+    let finalX = x;
+    let finalY = y;
+    
+    if (isMobile && cx !== undefined && cy !== undefined) {
+        const dx = x - cx;
+        const dy = y - cy;
+        const length = Math.sqrt(dx * dx + dy * dy);
+        if (length > 0) {
+            // Push text out by 20px
+            const offset = 20; 
+            finalX = x + (dx / length) * offset;
+            finalY = y + (dy / length) * offset;
+        }
+    }
+    
     return (
       <g 
-        className="group cursor-help"
+        className="group cursor-pointer"
         onMouseEnter={() => {
-           const descriptions = STAT_DESCRIPTIONS[selectedClass.role][payload.value];
-           const desc = descriptions ? descriptions[getLevelIndex(value)] : '';
-           setHoveredStat({ subject: payload.value, value, description: desc });
+           if (!isMobile) {
+             const descriptions = STAT_DESCRIPTIONS[selectedClass.role][payload.value];
+             const desc = descriptions ? descriptions[getLevelIndex(value)] : '';
+             setHoveredStat({ subject: payload.value, value, description: desc });
+           }
         }}
-        onMouseLeave={() => setHoveredStat(null)}
+        onMouseLeave={() => {
+           if (!isMobile) {
+             setHoveredStat(null);
+           }
+        }}
+        onClick={(e) => {
+           if (isMobile) {
+             e.stopPropagation();
+             const descriptions = STAT_DESCRIPTIONS[selectedClass.role][payload.value];
+             const desc = descriptions ? descriptions[getLevelIndex(value)] : '';
+             setHoveredStat({ subject: payload.value, value, description: desc });
+           }
+        }}
       >
         <text
           {...props}
-          x={x}
-          y={y}
-          textAnchor={textAnchor}
+          x={finalX}
+          y={finalY}
+          textAnchor={isMobile ? "middle" : textAnchor}
           stroke="none"
           fill="#ffffff"
           className={`text-xs md:text-sm font-bold transition-colors duration-200 ${isHovered ? 'drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]' : ''}`}
         >
-          {isMultiLine ? <><tspan x={x} dy="-0.4em">조작</tspan><tspan x={x} dy="1.2em">난이도</tspan></> : payload.value}
+          {isMultiLine ? <><tspan x={finalX} dy="-0.4em">조작</tspan><tspan x={finalX} dy="1.2em">난이도</tspan></> : payload.value}
         </text>
-        <rect x={x - 20} y={y - 10} width="40" height="20" fill="transparent" />
+        {/* Increase hit area for mobile */}
+        <rect x={finalX - 30} y={finalY - 15} width="60" height="30" fill="transparent" />
       </g>
     );
   };
@@ -1005,8 +1046,10 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
 
                 <div className="w-full h-64 relative">
                   {hoveredStat && (
-                    <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none animate-fade-in-up">
-                        <div className="bg-midnight/95 backdrop-blur-md p-6 rounded-full border border-white/20 text-center max-w-[280px] shadow-[0_0_30px_rgba(0,0,0,0.8)]">
+                    <div 
+                      className={`absolute inset-0 z-20 flex items-center justify-center animate-fade-in-up ${isMobile ? 'pointer-events-auto' : 'pointer-events-none'}`}
+                    >
+                        <div className="bg-midnight/95 backdrop-blur-md p-6 rounded-full border border-white/20 text-center max-w-[280px] shadow-[0_0_30px_rgba(0,0,0,0.8)] relative">
                           <div className={`text-xs font-bold mb-1 uppercase tracking-widest ${theme.text}`}>
                             {hoveredStat.subject} Lv.{getLevelIndex(hoveredStat.value) + 1}
                           </div>
@@ -1014,12 +1057,24 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
                           <p className="text-white text-sm font-medium leading-relaxed break-keep">
                             "{hoveredStat.description}"
                           </p>
+
+                          {/* Close Button - Visible only on mobile/tablet */}
+                          <button 
+                             onClick={(e) => {
+                               e.stopPropagation();
+                               setHoveredStat(null);
+                             }}
+                             className="lg:hidden mt-4 mx-auto w-8 h-8 rounded-full border border-white/30 flex items-center justify-center text-white/70 hover:bg-white/10 hover:text-white transition-colors"
+                             aria-label="Close"
+                          >
+                            <X size={16} />
+                          </button>
                         </div>
                     </div>
                   )}
                   
                   <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart cx="50%" cy="50%" outerRadius="70%" data={radarData}>
+                    <RadarChart cx="50%" cy="50%" outerRadius={isMobile ? "60%" : "70%"} data={radarData}>
                       <PolarGrid stroke="#334155" />
                       <PolarAngleAxis dataKey="subject" tick={<CustomTick />} />
                       <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
@@ -1037,7 +1092,8 @@ const ClassSystem: React.FC<ClassSystemProps> = ({ selectedRole, onRoleChange })
                   {!hoveredStat && (
                     <div className="absolute bottom-0 right-0 text-xs text-gray-600 flex items-center gap-1 opacity-50">
                       <Info size={12} />
-                      <span>항목에 마우스를 올려보세요</span>
+                      <span className="hidden lg:inline">항목에 마우스를 올려보세요</span>
+                      <span className="lg:hidden">항목을 터치하여 확인하세요</span>
                     </div>
                   )}
                 </div>

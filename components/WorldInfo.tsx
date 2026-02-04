@@ -37,6 +37,20 @@ const WorldInfo: React.FC = () => {
     setHoveredId(prev => prev === id ? null : id);
   };
 
+  const handleMouseEnter = (id: string) => {
+    // Only allow hover effects on large screens (desktop)
+    if (window.innerWidth >= 1024) {
+      setHoveredId(id);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    // Only allow hover exit on large screens
+    if (window.innerWidth >= 1024) {
+      setHoveredId(null);
+    }
+  };
+
   return (
     <section 
       id="world" 
@@ -126,8 +140,8 @@ const WorldInfo: React.FC = () => {
             return (
               <div 
                 key={feature.id} 
-                onMouseEnter={() => setHoveredId(feature.id)}
-                onMouseLeave={() => setHoveredId(null)}
+                onMouseEnter={() => handleMouseEnter(feature.id)}
+                onMouseLeave={handleMouseLeave}
                 onClick={() => handleInteraction(feature.id)}
                 className={`group relative h-[500px] overflow-hidden rounded-sm border border-white/10 transition-all duration-500 hover:shadow-[0_0_30px_rgba(0,0,0,0.5)] bg-midnight/30 backdrop-blur-sm cursor-pointer ${borderClass}`}
               >

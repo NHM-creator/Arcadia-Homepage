@@ -66,10 +66,10 @@ const StoryPage: React.FC = () => {
         
         {/* Intro Text - Centered & Larger */}
         <div className="prose prose-invert max-w-5xl mx-auto space-y-8 px-2 md:px-8">
-            <p className="text-center text-xl md:text-2xl leading-relaxed text-gray-200">
-            <span className="text-gold font-bold text-3xl md:text-4xl align-middle">태</span>초의 신들이 무의 공간에서 질서와 빛으로 낙원 <strong className="text-white">'아르카디아'</strong>를 창조했습니다.<br/>그러나 그 완벽한 질서를 시기한 심연의 혼돈 군주들이 <br className="hidden md:block"/> 차원의 벽을 찢고 침공을 시작하며, 낙원은 불길에 휩싸였습니다.
+            <p className="text-center text-lg md:text-xl leading-relaxed text-gray-200">
+            <span className="text-gold font-bold text-2xl md:text-3xl align-middle">태</span>초의 신들이 무의 공간에서 질서와 빛으로 낙원 <strong className="text-white">'아르카디아'</strong>를 창조했습니다.<br/>그러나 그 완벽한 질서를 시기한 심연의 혼돈 군주들이 <br className="hidden md:block"/> 차원의 벽을 찢고 침공을 시작하며, 낙원은 불길에 휩싸였습니다.
             </p>
-            <p className="text-center text-xl md:text-2xl leading-relaxed text-gray-200">
+            <p className="text-center text-lg md:text-xl leading-relaxed text-gray-200">
             신들은 수천 년에 걸친 '신화 대전' 끝에 자신들의 영혼을 코어에 갈아 넣어 <br className="hidden md:block"/> 군주들을 차원의 틈새에 봉인했습니다.<br/><br/>그 대가로 신들은 육신을 잃고 영원한 잠에 빠져들었으며, <br className="hidden md:block"/> 그들의 권능은 대지 곳곳에 파편으로 흩어졌습니다.<br/><br/>그러나 오랜 세월이 흘러 신들의 힘이 희미해지자, <br className="hidden md:block"/> 균열 너머에서 다시금 군주들의 속삭임이 들려오기 시작했습니다.
             </p>
         </div>

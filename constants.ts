@@ -128,7 +128,7 @@ export const CLASSES: ClassData[] = [
   },
   {
     id: 'night-walker',
-    name: '어쎄신',
+    name: '어쌔신',
     role: 'DEALER',
     nation: 'EAST',
     tagline: '죽음의 그림자',
